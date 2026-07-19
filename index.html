@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎂</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+overflow:hidden;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff6ec4,#7873f5);
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+.container{
+
+width:90%;
+max-width:400px;
+padding:30px;
+text-align:center;
+border-radius:25px;
+
+background:rgba(255,255,255,.15);
+backdrop-filter:blur(15px);
+
+box-shadow:0 15px 40px rgba(0,0,0,.2);
+
+animation:fade 1.2s ease;
+z-index:10;
+}
+
+@keyframes fade{
+
+from{
+opacity:0;
+transform:translateY(40px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+h1{
+
+font-family:Pacifico;
+font-size:clamp(2rem,8vw,3.5rem);
+
+color:#fff;
+
+text-shadow:
+0 0 10px #fff,
+0 0 20px #ff66b2,
+0 0 40px #ff66b2;
+
+animation:glow 2s infinite alternate;
+
+}
+
+@keyframes glow{
+
+from{
+text-shadow:0 0 10px white;
+}
+
+to{
+text-shadow:
+0 0 20px white,
+0 0 40px hotpink;
+}
+
+}
+
+.photo{
+
+width:170px;
+height:170px;
+
+margin:20px auto;
+
+border-radius:50%;
+overflow:hidden;
+
+border:5px solid white;
+
+box-shadow:0 0 25px white;
+
+}
+
+.photo img{
+
+width:100%;
+height:100%;
+object-fit:cover;
+
+}
+
+button{
+
+margin-top:25px;
+
+padding:15px 35px;
+
+border:none;
+border-radius:50px;
+
+font-size:18px;
+
+background:white;
+color:#ff1493;
+
+cursor:pointer;
+
+font-weight:bold;
+
+transition:.3s;
+
+}
+
+button:hover{
+
+transform:scale(1.08);
+box-shadow:0 10px 25px rgba(255,255,255,.5);
+
+}
+
+.popup{
+
+position:fixed;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%) scale(0);
+
+width:90%;
+max-width:420px;
+
+background:white;
+
+padding:30px;
+
+border-radius:20px;
+
+text-align:center;
+
+transition:.4s;
+
+z-index:100;
+
+box-shadow:0 15px 40px rgba(0,0,0,.3);
+
+}
+
+.popup.active{
+
+transform:translate(-50%,-50%) scale(1);
+
+}
+
+.popup h2{
+
+color:#ff1493;
+margin-bottom:15px;
+
+}
+
+.popup p{
+
+line-height:1.8;
+font-size:16px;
+
+}
+
+.close{
+
+margin-top:20px;
+
+background:#ff1493;
+color:white;
+
+}
+
+.balloon{
+
+position:absolute;
+
+bottom:-200px;
+
+font-size:45px;
+
+animation:float linear infinite;
+
+}
+
+@keyframes float{
+
+0%{
+transform:translateY(0);
+}
+
+100%{
+transform:translateY(-130vh);
+}
+
+}
+
+@media(max-width:600px){
+
+.photo{
+width:140px;
+height:140px;
+}
+
+button{
+
+width:100%;
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+
+<h1>Happy Birthday 🎂</h1>
+
+<div class="photo">
+<img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600" alt="">
+</div>
+
+<h2 style="color:white;">Dear Friend ❤️</h2>
+
+<p style="color:white;margin-top:15px;">
+May your life be filled with happiness, laughter and success.
+Have an amazing birthday! 🥳
+</p>
+
+<button onclick="showWish()">
+Open Birthday Wish 🎁
+</button>
+
+</div>
+
+<div class="popup" id="popup">
+
+<h2>🎉 Happy Birthday! 🎂</h2>
+
+<p>
+
+🎉 Happy Birthday, my dear friend! 🎂<br><br>
+
+Wishing you a day filled with laughter 😂, love ❤️, and lots of cake 🍰 because calories don't count today! 😄
+
+May this year bring endless happiness ✨, good health 🌸, success 🌟, and unforgettable memories 📸.
+
+Stay kind 💖, keep smiling 😊, and never stop being your amazing self.
+
+Have the most wonderful birthday ever! 🥳🎈🎁
+
+</p>
+
+<button class="close" onclick="hideWish()">
+Close
+</button>
+
+</div>
+
+<script>
+
+function showWish(){
+document.getElementById("popup").classList.add("active");
+}
+
+function hideWish(){
+document.getElementById("popup").classList.remove("active");
+}
+
+for(let i=0;i<20;i++){
+
+let b=document.createElement("div");
+
+b.className="balloon";
+
+b.innerHTML=["🎈","🎉","❤️","🎊"][Math.floor(Math.random()*4)];
+
+b.style.left=Math.random()*100+"%";
+
+b.style.animationDuration=(8+Math.random()*8)+"s";
+
+b.style.fontSize=(30+Math.random()*30)+"px";
+
+document.body.appendChild(b);
+
+}
+
+// Confetti
+
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+let pieces=[];
+
+for(let i=0;i<200;i++){
+
+pieces.push({
+
+x:Math.random()*canvas.width,
+
+y:Math.random()*canvas.height,
+
+r:Math.random()*8+2,
+
+d:Math.random()*200,
+
+color:`hsl(${Math.random()*360},100%,50%)`,
+
+tilt:Math.random()*10,
+
+speed:Math.random()*3+2
+
+});
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+pieces.forEach(p=>{
+
+ctx.beginPath();
+
+ctx.fillStyle=p.color;
+
+ctx.fillRect(p.x,p.y,p.r,p.r*2);
+
+});
+
+update();
+
+requestAnimationFrame(draw);
+
+}
+
+function update(){
+
+pieces.forEach(p=>{
+
+p.y+=p.speed;
+
+if(p.y>canvas.height){
+
+p.y=-20;
+
+p.x=Math.random()*canvas.width;
+
+}
+
+});
+
+}
+
+draw();
+
+window.onresize=()=>{
+
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+};
+
+</script>
+
+</body>
+</html>
